@@ -1,0 +1,2 @@
+# Data Pull
+By Running the 'data_collection.ipynb' from top to bottom you will pull the data for the the 'player_data.csv'. It includes many of the NBA player stats from the 2024-2025 NBA season. Including their per game stats, advanced stats (like per and TS%) and more. It also includes their teams win percentage for that season, as well as each award won by the player. All of the stats and numbers are pulled from basketball-reference.com.
