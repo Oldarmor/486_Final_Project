@@ -1,9 +1,144 @@
 # Exploratory Data Analysis
-## Research Question, Data Set Overview, and Source Legitimacy
-### Research Question
-For later sections of the project, specifically for the supervised learning where we will try to find under and overperformers, we will be predicting both PER (Player Efficiency Rating) and player win shares. But PER and player win shares are also calculated with many of the variables in the data set, and so including those variables in the supervised learning aspect would be trivial because it would allow the machine learning model to almost replicate the exact formula. So, the research question is simple: what other variables (that aren't used in their respective calculations) relate to, and can help predict PER and player win shares?
-### Data Set Overview
-All the data for this analysis will be pulled from basketball-reference.com. It is a mixture of a players average per game stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_per_game.html#per_game_stats)), with the players advanced stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_advanced.html)). We pulled the data using a very basic web scraper, and merged it together. The pulled and merged data can be found in 00_data/player_data.csv. The notebook with the basic webscraper can be found in 00_data/data_collection.ipynb, Below is a data dictionary that describes the values in each of the columns in the data found in player_data.csv:
+## Research Question and Data Set Overview
+*Main research question:* what variables can be used to predict PER and Win Shares that aren't already used in the calculations of PER and Win Shares?
+*Summary and Citing of Data:* All the data for this analysis will be pulled from basketball-reference.com. It is a mixture of a players average per game stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_per_game.html#per_game_stats)), with the players advanced stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_advanced.html)). At the bottom of this document is a variable dictionary that describes each variable in the dataset.
+*Ethics and Legality:* There are no legal or ethical concerns as all the information in the data set is publicly available.
+It is important to note that if a player is traded to a different team during the season shows up as two different players in the data set and their stats for each team they were on are recorded on different rows. So, Luka Doncic, for example, shows up twice: once with his stats for the LA Lakers and another time for his stats for the Dallas Mavericks.
+## Data Description and Variables
+*Key Variables and Target Variables:* The key variables in this analysis are going to be Player Efficiency Rating and Win Shares. Player Efficiency Rating is a metric that estimates how efficient a player is, and Win Shares is a metric that estimates how many wins that that player contributed to for their team. For more information on all the variables in the data set refer to the variable dictionary below.
+*Preprocessing Steps:* Due to the size of the data set and minimal NA values, just all rows with an NA were dropped. Additionally many non-numeric columns (like awards and team for example) were also dropped because the purpose of the analysis is to find correlation between the key variables and the other variables. Finally, duplicate columns and useless columns were dropped as well.
+## Summary Statistics
+*Sample Size and Key Variable Statistics:* After dropping all the NA's sample size for all variables is 584. PER Mean: 13.424144, PER Standard Deviation: 5.088127. Win Shares Mean: 2.07226, Win Shares Standard Deviation: 2.43535. For mean and standard deviations for all numeric variables see the Variable Summaries below.
+*Correlation Matrices:* Below are the both the Pearson (for linear relationships) and Spearman (for monotonic but non-linear relationships) correlation matrices between PER and other variables and Win Shares and other variables. Notice that many variables were removed when calculating the correlation matrices, this is because I wanted to remove any statistic that was directly used in the PER formula, or indirectly used in the PER formula.
+PER Pearson Correlation Matrix:
+|      |        PER |
+|:-----|-----------:|
+| PER  |  1         |
+| 2PA  |  0.620589  |
+| FTA  |  0.609264  |
+| USG% |  0.431818  |
+| GS   |  0.39014   |
+| PF   |  0.339457  |
+| G    |  0.269884  |
+| BLK% |  0.266284  |
+| 3PA  |  0.230728  |
+| FT%  |  0.188875  |
+| FTr  |  0.164542  |
+| Age  |  0.158382  |
+| STL% |  0.0369754 |
+| TOV% | -0.173601  |
+| 3PAr | -0.355315  |
+PER Spearman Correlation Matrix:
+|      |        PER |
+|:-----|-----------:|
+| PER  |  1         |
+| 2PA  |  0.59234   |
+| FTA  |  0.590339  |
+| USG% |  0.459251  |
+| FTr  |  0.403317  |
+| GS   |  0.402002  |
+| PF   |  0.319298  |
+| BLK% |  0.263725  |
+| G    |  0.255398  |
+| Age  |  0.192941  |
+| 3PA  |  0.16578   |
+| FT%  |  0.154116  |
+| STL% |  0.0368126 |
+| TOV% | -0.10586   |
+| 3PAr | -0.378342  |
+Win Shares Pearson Correlation Matrix:
+|      |          WS |
+|:-----|------------:|
+| WS   |  1          |
+| FG   |  0.677359   |
+| G    |  0.675633   |
+| PTS  |  0.664464   |
+| 2P   |  0.653952   |
+| MP_x |  0.628787   |
+| DRB  |  0.618051   |
+| 2PA  |  0.602168   |
+| TRB  |  0.598601   |
+| FGA  |  0.595539   |
+| FT   |  0.571623   |
+| FTA  |  0.566889   |
+| AST  |  0.530519   |
+| STL  |  0.481733   |
+| TOV  |  0.456335   |
+| PF   |  0.432701   |
+| 3P   |  0.425446   |
+| TS%  |  0.421136   |
+| ORB  |  0.417892   |
+| FG%  |  0.387781   |
+| 3PA  |  0.384216   |
+| eFG% |  0.378118   |
+| BLK  |  0.376511   |
+| AST% |  0.281715   |
+| USG% |  0.253008   |
+| 2P%  |  0.249979   |
+| DRB% |  0.193571   |
+| Age  |  0.186925   |
+| 3P%  |  0.179606   |
+| FT%  |  0.17188    |
+| TRB% |  0.155246   |
+| BLK% |  0.095553   |
+| FTr  |  0.0646177  |
+| ORB% |  0.037817   |
+| STL% | -0.00617285 |
+| TOV% | -0.127358   |
+| 3PAr | -0.165697   |
+Win Shares Spearman Correlation Matrix:
+|      |         WS |
+|:-----|-----------:|
+| WS   |  1         |
+| G    |  0.773892  |
+| FG   |  0.677726  |
+| PTS  |  0.667608  |
+| MP_x |  0.658633  |
+| DRB  |  0.634193  |
+| 2P   |  0.623     |
+| TRB  |  0.618862  |
+| TS%  |  0.611122  |
+| FGA  |  0.591602  |
+| eFG% |  0.579789  |
+| 2PA  |  0.567215  |
+| FT   |  0.53696   |
+| STL  |  0.53664   |
+| FG%  |  0.533329  |
+| FTA  |  0.5285    |
+| PF   |  0.51049   |
+| AST  |  0.504031  |
+| BLK  |  0.467892  |
+| ORB  |  0.461266  |
+| 3P   |  0.454114  |
+| TOV  |  0.449342  |
+| 2P%  |  0.39912   |
+| 3PA  |  0.394969  |
+| 3P%  |  0.356082  |
+| Age  |  0.224044  |
+| AST% |  0.192106  |
+| FT%  |  0.179921  |
+| DRB% |  0.167298  |
+| BLK% |  0.155177  |
+| FTr  |  0.133751  |
+| USG% |  0.129639  |
+| TRB% |  0.125545  |
+| ORB% |  0.0451087 |
+| STL% |  0.0382996 |
+| 3PAr | -0.116322  |
+| TOV% | -0.1602    |
+*Interesting Insights:* It is extremely interesting to note that three point attempt rate has a negative correlation for both PER and Win Shares. Meaning players that shoot a higher percentage of three pointers actually tend to be less efficient and less impactful for a team. This is interesting because recently the NBA has gone through a "three point revolution" where now threes are being shot at a higher rate than ever before, but it actually seems to make a player less impactful and less efficient.
+
+## Visual Exploration
+Below is a plot showing the relationship between three point attempt rate (3PAr) and PER:
+![3PAr vs PER](plots/3PAr_vs_PER.png)
+This really shows a general downward trend for players that take a high percentage of three pointers. Keep in mind that mean PER is 13.424144, and looking at this chart it looks like majority of players that take over 50% of their shots beyond the three point line are below average on PER. It's also interesting to see how majority of players are right around that 50% mark on their three point attempt rate.
+
+Below is a plot showing the relationship between field goals (FG) and Win Shares (WS):
+![FG vs WS](plots/FG_vs_WS.png)
+
+This plot is interesting because as field goals increase the variance also increases (leading to the cone shape). And while there is a general upward trend with increased field goals leading to increased win shares, there are still some players with high field goals per game, but essentially zero win shares. This supports the idea of "empty stats" or "empty points" where some players can put up a lot of points, but don't really contribute to helping their team win, which could be due to them playing poorly on the defensive end or having other issues hurting their team.
+
+## Variable Dictionary:
 index: index of the rows
 Rk_x: the ranking from one of the data pulls based off of a specific stat (unused in the EDA)
 Player: the players name
@@ -60,11 +195,50 @@ DBPM: deffensive box plus minus, box score estimate of deffensive points per 100
 BPM: box plus minus, box score estimate of total points per 100 possesions a player contributed above a league average player on an average team
 VORP: value over replacement player, box score estimate of total points per 100 team possesions that a player contributed above a replace player on an average team
 
-It is important to note that if a player is traded to a different team during the season shows up as two different players in the data set and their stats for each team they were on are recorded on different rows. So, Luka Doncic for example shows up twice, once with his stats for the LA Lakers and another time for his stats for the Dallas Mavericks.
-### Source Legitimacy
-Basketball reference is the leading source of basketball statistics on players in the industry, so it's pretty reliabe. The robots.txt doesn't restrict the pages we scraped the tables off of, so there's no issue with pulling the data we pulled. Additionally all the data and numbers are readily and publicly available for everyone. Finally there isn't any legally significant information in the data so this analysis is perfectly legal.
-## Variables, Target and Preprocessing
-### Key and Target Variables
-They key and target variables everything will be compared to will be a players PER and total win shares. We will also look at the distribution of win shares and PER. We will be looking at both the Pearson correlation and the Spearman correlation, that way we can get a good general idea of how each variabe correlates to PER and Win Shares. The Pearson correlation will give a good idea on if theres a linear relationship, and the Spearman measure monotonicity helping give me an idea if there is a strictly increasing or decreasing relationship even if it isn't strictly linear.
-### Preprocessing
-For preprocessing the data we simply cleaned out the excess and unimportant columns that were left over from pulling the data. Those columns include MP_y, Rk_x, Rk_y, Unnamed: 0, and index. Afterwards all rows with an NaN were dropped from the dataset, there were very few NaN's and while it did shrink the data set slightly, the size of the data set is still quite significant and so it was decided it would just be easiest to drop them. From there all of the non-numeric columns were stripped out and a quick eda (which is described in further detail below) was ran on the data to find the distributions of PER and WS and the correlations between all of the variables to get a good idea about which ones would be good to use in the supervised learning models. Finally to end we just created a the same purely numeric dataframe, but decided to keep player name, that way when a player is found to be a significant under or over performer we can know their exact name.
+## Variable Summaries
+Below is a list of all the numeric variables in the data set, with their mean and standard deviation (in that order).
+Age: 25.981164, 4.175973
+G: 43.445205, 23.819585
+GS: 20.431507, 25.041484
+MP_x: 20.209932, 9.251792
+FG: 3.399315, 2.326851
+FGA: 7.432021, 4.823913
+FG%: 0.448902, 0.088491
+3P: 1.114726, 0.893845
+3PA: 3.171233, 2.314381
+3P%: 0.314269, 0.115827
+2P: 2.285616, 1.831008
+2PA: 4.261986, 3.294628
+2P%: 0.529262, 0.104173
+eFG%: 0.522075, 0.092367
+FT: 1.414555, 1.359564
+FTA: 1.818836, 1.660268
+FT%: 0.755416, 0.139870
+ORB: 0.927226, 0.728066
+DRB: 2.718664, 1.760646
+TRB: 3.642808, 2.327422
+AST: 2.206849, 1.839771
+STL: 0.701370, 0.419014
+BLK: 0.401370, 0.389922
+TOV: 1.138699, 0.833955
+PF: 1.589384, 0.736496
+PTS: 9.321062, 6.497875
+Team_Win: 0.485596, 0.164010
+TS%: 0.553505, 0.083791
+3PAr: 0.435729, 0.192274
+FTr: 0.244616, 0.155955
+ORB%: 5.347432, 3.848338
+DRB%: 14.676884, 6.089087
+TRB%: 10.006678, 4.434483
+AST%: 14.619521, 8.461719
+STL%: 1.699144, 0.836793
+BLK%: 1.887500, 1.635088
+TOV%: 12.227568, 4.752265
+USG%: 18.915753, 5.626163
+OWS: 1.083048, 1.661512
+DWS: 0.990068, 0.974250
+WS/48: 0.080209, 0.080946
+OBPM: -1.205479, 3.146574
+DBPM: -0.170890, 1.559569
+BPM: -1.376541, 3.888296
+VORP: 0.496575, 1.154344
