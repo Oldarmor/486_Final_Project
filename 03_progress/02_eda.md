@@ -2,15 +2,20 @@
 ## Research Question and Data Set Overview
 **Main research question:** what variables can be used to predict PER and Win Shares that aren't already used in the calculations of PER and Win Shares?
 **Summary and Citing of Data:** All the data for this analysis will be pulled from basketball-reference.com. It is a mixture of a players average per game stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_per_game.html#per_game_stats)), with the players advanced stats across the 2024-2025 season (which can be found [here](https://www.basketball-reference.com/leagues/NBA_2025_advanced.html)). At the bottom of this document is a variable dictionary that describes each variable in the dataset.
+
 **Ethics and Legality:** There are no legal or ethical concerns as all the information in the data set is publicly available.
 It is important to note that if a player is traded to a different team during the season shows up as two different players in the data set and their stats for each team they were on are recorded on different rows. So, Luka Doncic, for example, shows up twice: once with his stats for the LA Lakers and another time for his stats for the Dallas Mavericks.
 ## Data Description and Variables
 **Key Variables and Target Variables:** The key variables in this analysis are going to be Player Efficiency Rating and Win Shares. Player Efficiency Rating is a metric that estimates how efficient a player is, and Win Shares is a metric that estimates how many wins that that player contributed to for their team. For more information on all the variables in the data set refer to the variable dictionary below.
+
 **Preprocessing Steps:** Due to the size of the data set and minimal NA values, just all rows with an NA were dropped. Additionally many non-numeric columns (like awards and team for example) were also dropped because the purpose of the analysis is to find correlation between the key variables and the other variables. Finally, duplicate columns and useless columns were dropped as well.
 ## Summary Statistics
 **Sample Size and Key Variable Statistics:** After dropping all the NA's sample size for all variables is 584. PER Mean: 13.424144, PER Standard Deviation: 5.088127. Win Shares Mean: 2.07226, Win Shares Standard Deviation: 2.43535. For mean and standard deviations for all numeric variables see the Variable Summaries below.
+
 **Correlation Matrices:** Below are the both the Pearson (for linear relationships) and Spearman (for monotonic but non-linear relationships) correlation matrices between PER and other variables and Win Shares and other variables. Notice that many variables were removed when calculating the correlation matrices, this is because I wanted to remove any statistic that was directly used in the PER formula, or indirectly used in the PER formula.
+
 PER Pearson Correlation Matrix:
+
 |      |        PER |
 |:-----|-----------:|
 | PER  |  1         |
